@@ -59,7 +59,7 @@ Vagrant.configure("2") do |config|
   
   #  # Customize the amount of memory on the VM:
     vb.memory = "4096"
-    vb.name = "identityIQ"
+    vb.name = "identityIQ #{Time.now}"
 	vb.cpus = 2
 	
   end
