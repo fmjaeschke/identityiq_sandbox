@@ -1,0 +1,17 @@
+- name: install git
+  yum:
+    name: git
+    update_cache: yes
+    state: latest
+
+- name: Clone docker repository
+  git:
+    repo: https://github.com/oracle/docker-images.git
+    dest: /home/vagrant/oracle-xe
+
+- name: build Oracle 18c XE docker image
+  ansible.builtin.shell: ./buildContainerImage.sh -v 18.4.0 -x
+  args:
+    chdir: /home/vagrant/oracle-xe/OracleDatabase/SingleInstance/dockerfiles
+    executable: /bin/sh
+  become: yes

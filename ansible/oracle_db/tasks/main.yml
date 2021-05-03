@@ -1,0 +1,28 @@
+---
+# tasks file for oracle_db
+
+- name: Oracle Role
+  set_fact:
+    role_oracle_started: yes
+  tags:
+    - always
+
+- block:
+    - name: make sure docker is running
+      import_tasks: docker.yml
+
+    - name: Install collection from Ansible Galaxy
+      command: ansible-galaxy collection install community.docker
+      changed_when: false
+
+    - name: Check current status
+      docker_image_info:
+        name: oracle/database:18.4.0-xe
+      register: last_result
+      ignore_errors: yes
+
+    - name: Import prepare
+      import_tasks: prepare.yml
+      when: last_result is defined and last_result.images == []
+
+
