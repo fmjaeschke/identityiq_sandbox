@@ -15,7 +15,7 @@ vagrant + ansible scripts for creating a sandbox with Sailpoint IdentityIQ
 - identityiq.war version 8.1
 - at least 10 GB of disc space (~6 GB for Oracle docker image itself + ~3 GB to build Oracle docker image)
 
-- plenty of time (on my AMD Ryzen5 2600 it takes 795 seconds alone for Oracle docker image build)
+- plenty of time (on my AMD Ryzen5 2600 it takes 795 seconds alone to build the Oracle docker image)
 
 ## Troubleshooting
 **Q: I get constantly errors like 'An error occurred during installation of VirtualBox Guest Additions' or version missmatch of installed VirtualBox guest extension and installed VirtualBox version.**
