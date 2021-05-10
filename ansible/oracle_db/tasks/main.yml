@@ -37,7 +37,7 @@
         load_path: /vagrant/oracle_database.tar
         state: present
         source: load
-        timeout: 180
+        timeout: 1800
       when: last_result is defined and last_result.images == [] and stat_oracle_database_result.stat.exists and stat_oracle_linux_result.stat.exists
 
     - name: load oraclelinux container from tarball
