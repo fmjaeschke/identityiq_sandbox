@@ -1,5 +1,5 @@
 - name: install java
-  yum: 
-    name: java-1.8.0-openjdk
+  apt:
+    name: openjdk-8-jdk
     update_cache: yes
     state: latest
