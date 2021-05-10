@@ -1,0 +1,36 @@
+- name: create Tomcat user
+  user:
+    name: tomcat
+    shell: /sbin/nologin
+    home: /opt/tomcat
+    create_home: true
+
+- name: download tomcat server packages
+  get_url:
+    url: https://downloads.apache.org/tomcat/tomcat-8/v8.5.65/bin/apache-tomcat-8.5.65.tar.gz
+    dest: /opt/tomcat
+    owner: tomcat
+    group: tomcat
+
+- name: extract tomcat packages
+  unarchive:
+    src: /opt/tomcat/apache-tomcat-8.5.65.tar.gz
+    dest: /opt/tomcat
+    owner: tomcat
+    group: tomcat
+    remote_src: yes
+
+- name: Create a symbolic link
+  file:
+    src: /opt/tomcat/apache-tomcat-8.5.65
+    dest: /opt/tomcat/latest
+    owner: tomcat
+    group: tomcat
+    state: link
+
+- name: Configure tomcat service
+  template:
+    src: files/tomcat.service.j2
+    dest: /etc/systemd/system/tomcat.service
+  notify:
+    - Start tomcat

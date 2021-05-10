@@ -3,7 +3,7 @@ vagrant + ansible scripts for creating a sandbox with Sailpoint IdentityIQ
 
 ## installed stack in sandbox
 - Java 8
-- Tomcat (TODO)
+- Tomcat
 - Oracle 18c XE
 - IdentityIQ (TODO)
 - OpenLDAP (TODO)
