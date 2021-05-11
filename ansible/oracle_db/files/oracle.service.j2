@@ -1,0 +1,17 @@
+[Unit]
+Description=Oracle service
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=0
+Restart=always
+ExecStart=/usr/bin/docker run --rm --name %n \
+    -p 1521:1521 -p 5500:5500 \
+    -e ORACLE_PWD=Vagrant_17$ \
+    -e ORACLE_CHARACTERSET=AL32UTF8 \
+    -v /opt/oracle/oradata:/opt/oracle/oradata \
+    oracle/database:18.4.0-xe
+
+[Install]
+WantedBy=multi-user.target

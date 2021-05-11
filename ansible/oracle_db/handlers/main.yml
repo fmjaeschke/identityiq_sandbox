@@ -1,0 +1,5 @@
+- name: Start oracle
+  systemd:
+    name: oracle
+    state: started
+    enabled: yes

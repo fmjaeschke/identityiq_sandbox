@@ -27,9 +27,10 @@ Vagrant.configure("2") do |config|
   # accessing "localhost:8080" will access port 80 on the guest machine.
   # config.vm.network "forwarded_port", guest: 80, host: 8080
   # tomcat
-  config.vm.network :forwarded_port, guest: 8080, host: 80
-  # mysql
-  config.vm.network :forwarded_port, guest: 3306, host: 3306
+  config.vm.network :forwarded_port, guest: 8080, host: 8080
+  # oracle
+  config.vm.network :forwarded_port, guest: 1521, host: 1521
+  config.vm.network :forwarded_port, guest: 5500, host: 5500
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.

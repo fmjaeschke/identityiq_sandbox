@@ -80,5 +80,44 @@
         state: present
       when: not stat_oracle_linux_result.stat.exists
 
+    - name: create oracle user
+      user:
+        name: oracle
+        shell: /sbin/nologin
+        home: /opt/oracle
+        uid: 54321
+        create_home: true
 
+    - name: create data volume
+      file:
+        path: /opt/oracle/oradata
+        state: directory
+        owner: oracle
+        group: oracle
+        mode: 0775
+        recurse: yes
 
+    - name: create db setup folder
+      file:
+        path: /opt/oracle/scripts/setup
+        state: directory
+        owner: oracle
+        group: oracle
+        mode: 0775
+        recurse: yes
+
+    - name: create db startup folder
+      file:
+        path: /opt/oracle/scripts/startup
+        state: directory
+        owner: oracle
+        group: oracle
+        mode: 0775
+        recurse: yes
+
+    - name: Configure Oracle service
+      template:
+        src: files/oracle.service.j2
+        dest: /etc/systemd/system/oracle.service
+      notify:
+        - Start oracle
