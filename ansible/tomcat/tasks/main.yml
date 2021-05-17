@@ -7,7 +7,7 @@
 
 - name: download tomcat server packages
   get_url:
-    url: https://downloads.apache.org/tomcat/tomcat-8/v8.5.65/bin/apache-tomcat-8.5.65.tar.gz
+    url: https://archive.apache.org/dist/tomcat/tomcat-8/v8.5.65/bin/apache-tomcat-8.5.65.tar.gz
     dest: /opt/tomcat
     owner: tomcat
     group: tomcat
