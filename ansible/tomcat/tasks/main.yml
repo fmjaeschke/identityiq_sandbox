@@ -4,6 +4,7 @@
     shell: /sbin/nologin
     home: /opt/tomcat
     create_home: true
+  become: true
 
 - name: download tomcat server packages
   get_url:
@@ -11,6 +12,7 @@
     dest: /opt/tomcat
     owner: tomcat
     group: tomcat
+  become: true
 
 - name: extract tomcat packages
   unarchive:
@@ -19,6 +21,7 @@
     owner: tomcat
     group: tomcat
     remote_src: yes
+  become: true
 
 - name: Create a symbolic link
   file:
@@ -27,10 +30,57 @@
     owner: tomcat
     group: tomcat
     state: link
+  become: true
 
 - name: Configure tomcat service
   template:
     src: files/tomcat.service.j2
     dest: /etc/systemd/system/tomcat.service
+  become: true
   notify:
+    - Start tomcat
+
+- name: Check if ojdbc8 JAR exists
+  stat:
+    path: /opt/tomcat/latest/lib/ojdbc8.jar
+  register: stat_ojdbc
+  become: true
+
+- name: Install lxml
+  apt:
+    name: python3-lxml
+    update_cache: yes
+    state: latest
+  become: true
+  when: stat_ojdbc.stat.exists == false
+
+- name: Install community.general collection from Ansible Galaxy
+  command: ansible-galaxy collection install community.general
+  changed_when: false
+  when: not stat_ojdbc.stat.exists
+
+- name: Download ojdbc8 from Maven Central
+  maven_artifact:
+    group_id: com.oracle.ojdbc
+    artifact_id: ojdbc8
+    version: 19.3.0.0
+    repository_url: https://repo1.maven.org/maven2
+    dest: /tmp/ojdbc8.jar
+    owner: vagrant
+    group: vagrant
+    mode: 0444
+  become: true
+  when: not stat_ojdbc.stat.exists
+
+- name: copy ojdbc8 to Tomcat
+  copy:
+    src: /tmp/ojdbc8.jar
+    dest: /opt/tomcat/latest/lib/ojdbc8.jar
+    owner: tomcat
+    group: tomcat
+    mode: 0640
+  become: true
+  when: not stat_ojdbc.stat.exists
+  notify:
+    - cleanup
     - Start tomcat

@@ -3,6 +3,7 @@
     name: git
     update_cache: yes
     state: latest
+  become: true
 
 - name: Clone docker repository
   git:
@@ -14,4 +15,4 @@
   args:
     chdir: /home/vagrant/oracle-xe/OracleDatabase/SingleInstance/dockerfiles
     executable: /bin/sh
-  become: yes
+  become: true

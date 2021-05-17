@@ -20,6 +20,7 @@
         name: oracle/database:18.4.0-xe
       register: last_result
       ignore_errors: yes
+      become: true
 
     - name: Check if oracle database container tarball exists
       stat:
@@ -38,6 +39,7 @@
         state: present
         source: load
         timeout: 1800
+      become: true
       when: last_result is defined and last_result.images == [] and stat_oracle_database_result.stat.exists and stat_oracle_linux_result.stat.exists
 
     - name: load oraclelinux container from tarball
@@ -46,6 +48,7 @@
         load_path: /vagrant/oracle_linux.tar
         state: present
         source: load
+      become: true
       when: last_result is defined and last_result.images == [] and stat_oracle_database_result.stat.exists and stat_oracle_linux_result.stat.exists
 
     - name: Import prepare
@@ -56,11 +59,13 @@
       docker_image_info:
         name: oracle/database:18.4.0-xe
       ignore_errors: no
+      become: true
       when: last_result is defined and last_result.images == []
 
     - name: Check oraclelinux docker image status  if image was build or installed from tarball
       docker_image_info:
         name: oraclelinux:7-slim
+      become: true
       ignore_errors: no
       when: last_result is defined and last_result.images == []
 
@@ -87,6 +92,7 @@
         home: /opt/oracle
         uid: 54321
         create_home: true
+      become: true
 
     - name: create data volume
       file:
@@ -96,6 +102,7 @@
         group: oracle
         mode: 0775
         recurse: yes
+      become: true
 
     - name: create db setup folder
       file:
@@ -105,6 +112,7 @@
         group: oracle
         mode: 0775
         recurse: yes
+      become: true
 
     - name: create db startup folder
       file:
@@ -114,10 +122,12 @@
         group: oracle
         mode: 0775
         recurse: yes
+      become: true
 
     - name: Configure Oracle service
       template:
         src: files/oracle.service.j2
         dest: /etc/systemd/system/oracle.service
+      become: true
       notify:
         - Start oracle

@@ -17,6 +17,29 @@ vagrant + ansible scripts for creating a sandbox with Sailpoint IdentityIQ
 
 - plenty of time (on my AMD Ryzen5 2600 it takes 795 seconds alone to build the Oracle docker image)
 
+## General usage
+Start image with
+```sh
+vagrant up
+```
+
+If something was changed in Ansible scripts rerun provisioning the image with
+```sh
+vagrant provision
+```
+
+Image could be stopped with
+```sh
+vagrant halt
+```
+
+And complete removed, if something was messed up with
+```sh
+vagrant destroy --force
+```
+
+Reference for Vagrant CLI options (https://www.vagrantup.com/docs/cli)
+
 ## Troubleshooting
 **Q: I get constantly errors like 'An error occurred during installation of VirtualBox Guest Additions' or version missmatch of installed VirtualBox guest extension and installed VirtualBox version.**
 

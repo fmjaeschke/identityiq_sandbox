@@ -5,6 +5,7 @@
   loop:
     - docker.io
     - python3-docker
+  become: true
 
 - name: Start and enable the Docker daemon
   service:

@@ -3,3 +3,11 @@
     name: tomcat
     state: started
     enabled: yes
+  become: true
+
+- name: Remove src file
+  file:
+    path: /tmp/ojdbc8.jar
+    state: absent
+  become: true
+  listen: cleanup
