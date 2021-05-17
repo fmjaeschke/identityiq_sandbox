@@ -11,7 +11,7 @@
     - name: make sure docker is running
       import_tasks: docker.yml
 
-    - name: Install collection from Ansible Galaxy
+    - name: Install community.docker collection from Ansible Galaxy
       command: ansible-galaxy collection install community.docker
       changed_when: false
 
