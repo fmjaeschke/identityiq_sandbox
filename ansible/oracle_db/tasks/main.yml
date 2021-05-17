@@ -75,6 +75,7 @@
         archive_path: /vagrant/oracle_database.tar
         source: pull
         state: present
+      become: true
       when: not stat_oracle_database_result.stat.exists
 
     - name: Archive oraclelinux container image as a tarball
@@ -83,6 +84,7 @@
         archive_path: /vagrant/oracle_linux.tar
         source: pull
         state: present
+      become: true
       when: not stat_oracle_linux_result.stat.exists
 
     - name: create oracle user
