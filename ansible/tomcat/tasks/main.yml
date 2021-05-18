@@ -49,7 +49,6 @@
 - name: Install lxml
   apt:
     name: python3-lxml
-    update_cache: yes
     state: latest
   become: true
   when: stat_ojdbc.stat.exists == false

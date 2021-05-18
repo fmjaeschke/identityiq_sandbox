@@ -1,7 +1,6 @@
 - name: install git
   apt:
     name: git
-    update_cache: yes
     state: latest
   become: true
 
