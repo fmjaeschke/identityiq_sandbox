@@ -28,6 +28,7 @@ Vagrant.configure("2") do |config|
   # config.vm.network "forwarded_port", guest: 80, host: 8080
   # tomcat
   config.vm.network :forwarded_port, guest: 8080, host: 8080
+  config.vm.network :forwarded_port, guest: 8000, host: 8000
   # oracle
   config.vm.network :forwarded_port, guest: 1521, host: 1521
   config.vm.network :forwarded_port, guest: 5500, host: 5500

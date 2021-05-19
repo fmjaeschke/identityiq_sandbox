@@ -16,7 +16,7 @@ Environment="CATALINA_HOME=/opt/tomcat/latest"
 Environment="CATALINA_PID=/opt/tomcat/latest/temp/tomcat.pid"
 Environment="CATALINA_OPTS=-Xms512M -Xmx1024M -server -XX:+UseParallelGC"
 
-ExecStart=/opt/tomcat/latest/bin/startup.sh
+ExecStart=/opt/tomcat/latest/bin/catalina.sh jpda start
 ExecStop=/opt/tomcat/latest/bin/shutdown.sh
 
 [Install]
