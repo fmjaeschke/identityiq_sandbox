@@ -1,0 +1,4 @@
+tomcat_version: 8.5.65
+
+tomcat_base_path: /opt/tomcat
+tomcat_home: "{{ tomcat_base_path }}/latest"

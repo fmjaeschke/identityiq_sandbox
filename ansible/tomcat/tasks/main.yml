@@ -2,22 +2,22 @@
   user:
     name: tomcat
     shell: /sbin/nologin
-    home: /opt/tomcat
+    home: "{{ tomcat_base_path }}"
     create_home: true
   become: true
 
 - name: download tomcat server packages
   get_url:
-    url: https://archive.apache.org/dist/tomcat/tomcat-8/v8.5.65/bin/apache-tomcat-8.5.65.tar.gz
-    dest: /opt/tomcat
+    url: "https://archive.apache.org/dist/tomcat/tomcat-8/v{{ tomcat_version }}/bin/apache-tomcat-{{ tomcat_version }}.tar.gz"
+    dest: "{{ tomcat_base_path }}"
     owner: tomcat
     group: tomcat
   become: true
 
 - name: extract tomcat packages
   unarchive:
-    src: /opt/tomcat/apache-tomcat-8.5.65.tar.gz
-    dest: /opt/tomcat
+    src: "{{ tomcat_base_path }}/apache-tomcat-{{ tomcat_version }}.tar.gz"
+    dest: "{{ tomcat_base_path }}"
     owner: tomcat
     group: tomcat
     remote_src: yes
@@ -25,8 +25,8 @@
 
 - name: Create a symbolic link
   file:
-    src: /opt/tomcat/apache-tomcat-8.5.65
-    dest: /opt/tomcat/latest
+    src: "{{ tomcat_base_path }}/apache-tomcat-{{ tomcat_version }}"
+    dest: "{{ tomcat_home }}"
     owner: tomcat
     group: tomcat
     state: link
@@ -42,7 +42,7 @@
 
 - name: Check if ojdbc8 JAR exists
   stat:
-    path: /opt/tomcat/latest/lib/ojdbc8.jar
+    path: "{{ tomcat_home }}/lib/ojdbc8.jar"
   register: stat_ojdbc
   become: true
 
@@ -74,7 +74,7 @@
 - name: copy ojdbc8 to Tomcat
   copy:
     src: /tmp/ojdbc8.jar
-    dest: /opt/tomcat/latest/lib/ojdbc8.jar
+    dest: "{{ tomcat_home }}/lib/ojdbc8.jar"
     owner: tomcat
     group: tomcat
     mode: 0640
