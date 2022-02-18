@@ -8,7 +8,7 @@
 
 - name: download tomcat server packages
   get_url:
-    url: "https://archive.apache.org/dist/tomcat/tomcat-8/v{{ tomcat_version }}/bin/apache-tomcat-{{ tomcat_version }}.tar.gz"
+    url: "https://archive.apache.org/dist/tomcat/tomcat-9/v{{ tomcat_version }}/bin/apache-tomcat-{{ tomcat_version }}.tar.gz"
     dest: "{{ tomcat_base_path }}"
     owner: tomcat
     group: tomcat
@@ -21,6 +21,14 @@
     owner: tomcat
     group: tomcat
     remote_src: yes
+  become: true
+
+- name: Make sure extracted archive belongs to tomcat user
+  file:
+    path: "{{ tomcat_base_path }}"
+    owner: tomcat
+    group: tomcat
+    recurse: true
   become: true
 
 - name: Create a symbolic link
@@ -37,6 +45,8 @@
   template:
     src: tomcat.service.j2
     dest: /etc/systemd/system/tomcat.service
+    owner: tomcat
+    group: tomcat
   become: true
   notify:
     - Start tomcat
