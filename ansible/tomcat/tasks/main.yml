@@ -60,9 +60,9 @@
 - name: Install lxml
   apt:
     name: python3-lxml
-    state: latest
+    state: present
   become: true
-  when: stat_ojdbc.stat.exists == false
+  when: not stat_ojdbc.stat.exists
 
 - name: Install community.general collection from Ansible Galaxy
   command: ansible-galaxy collection install community.general
