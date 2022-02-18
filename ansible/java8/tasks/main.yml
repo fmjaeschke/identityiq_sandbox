@@ -1,5 +1,0 @@
-- name: install java
-  apt:
-    name: openjdk-8-jdk
-    state: latest
-  become: true
