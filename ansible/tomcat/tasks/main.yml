@@ -30,6 +30,7 @@
     owner: tomcat
     group: tomcat
     state: link
+    follow: false
   become: true
 
 - name: Configure tomcat service
