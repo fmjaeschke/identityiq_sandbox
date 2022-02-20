@@ -2,8 +2,8 @@
 vagrant + ansible scripts for creating a sandbox with Sailpoint IdentityIQ
 
 ## installed stack in sandbox
-- Java 8
-- Tomcat
+- Java 11
+- Tomcat 9
 - Oracle 18c XE
 - IdentityIQ (TODO)
 - OpenLDAP (TODO)
@@ -11,7 +11,7 @@ vagrant + ansible scripts for creating a sandbox with Sailpoint IdentityIQ
 ## Requirements
 - virtualbox
 - vagrant
-- vagrant-vbguest (version 0.21 is preferred)
+- (optional) vagrant-vbguest (see [Troubleshooting](#Troubleshooting) section in case of problems)
 - identityiq.war version 8.1
 - at least 10 GB of disc space (~6 GB for Oracle docker image itself + ~3 GB to build Oracle docker image)
 
@@ -40,7 +40,7 @@ vagrant destroy --force
 
 Reference for Vagrant CLI options (https://www.vagrantup.com/docs/cli)
 
-## Troubleshooting
+##Troubleshooting
 **Q: I get constantly errors like 'An error occurred during installation of VirtualBox Guest Additions' or version missmatch of installed VirtualBox guest extension and installed VirtualBox version.**
 
 **A:** You may need to downgrade installed vagrant-vbguest plugin
