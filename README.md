@@ -11,7 +11,7 @@ vagrant + ansible scripts for creating a sandbox with Sailpoint IdentityIQ
 ## Requirements
 - virtualbox
 - vagrant
-- (optional) vagrant-vbguest (see [Troubleshooting](#Troubleshooting) section in case of problems)
+- (optional) vagrant-vbguest (see [Troubleshooting](#troubleshooting) section in case of problems)
 - identityiq.war version 8.1
 - at least 10 GB of disc space (~6 GB for Oracle docker image itself + ~3 GB to build Oracle docker image)
 
