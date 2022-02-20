@@ -2,5 +2,5 @@
 .idea/
 *.iml
 *.log
-oracle_database.tar
+oracle_database*.tar
 oracle_linux.tar

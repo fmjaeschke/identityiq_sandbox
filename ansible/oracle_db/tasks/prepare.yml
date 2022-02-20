@@ -10,9 +10,11 @@
     dest: /home/vagrant/oracle-xe
     version: 65261b950a9571d99bbf1bdef067e1ada25040bd
 
-- name: build Oracle 18c XE docker image
-  command: ./buildContainerImage.sh -v 18.4.0 -x
-  args:
-    chdir: /home/vagrant/oracle-xe/OracleDatabase/SingleInstance/dockerfiles
-    executable: /bin/sh
+- name: build Oracle {{ oracle_version }} XE docker image
+  command:
+    argv:
+      - /home/vagrant/oracle-xe/OracleDatabase/SingleInstance/dockerfiles/buildContainerImage.sh
+      - -v
+      - '{{ oracle_version }}'
+      - -x
   become: true

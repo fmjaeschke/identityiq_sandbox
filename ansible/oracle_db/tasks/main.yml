@@ -17,14 +17,14 @@
 
     - name: Check docker image current status
       docker_image_info:
-        name: oracle/database:18.4.0-xe
+        name: '{{ oracle_docker_name }}'
       register: last_result
       ignore_errors: yes
       become: true
 
     - name: Check if oracle database container tarball exists
       stat:
-        path: /vagrant/oracle_database.tar
+        path: '/vagrant/oracle_database_{{ oracle_version }}.tar'
       register: stat_oracle_database_result
 
     - name: Check if oracle linux container tarball exists
@@ -34,8 +34,8 @@
 
     - name: load database container from tarball
       docker_image:
-        name: oracle/database:18.4.0-xe
-        load_path: /vagrant/oracle_database.tar
+        name: '{{ oracle_docker_name }}'
+        load_path: '/vagrant/oracle_database_{{ oracle_version }}.tar'
         state: present
         source: load
         timeout: 1800
@@ -53,11 +53,13 @@
 
     - name: Import prepare
       import_tasks: prepare.yml
-      when: last_result is defined and last_result.images == [] and not stat_oracle_database_result.stat.exists and not stat_oracle_linux_result.stat.exists
+      when: last_result is defined and last_result.images == [] and not stat_oracle_database_result.stat.exists or not stat_oracle_linux_result.stat.exists
+      notify:
+        - clean build
 
     - name: Check database docker image status if image was build or installed from tarball
       docker_image_info:
-        name: oracle/database:18.4.0-xe
+        name: '{{ oracle_docker_name }}'
       ignore_errors: no
       become: true
       when: last_result is defined and last_result.images == []
@@ -71,8 +73,8 @@
 
     - name: Archive database container image as a tarball
       docker_image:
-        name: oracle/database:18.4.0-xe
-        archive_path: /vagrant/oracle_database.tar
+        name: '{{ oracle_docker_name }}'
+        archive_path: '/vagrant/oracle_database_{{ oracle_version }}.tar'
         source: pull
         state: present
       become: true
@@ -102,7 +104,7 @@
         state: directory
         owner: oracle
         group: oracle
-        mode: 0775
+        mode: 0750
         recurse: yes
       become: true
 
@@ -112,7 +114,7 @@
         state: directory
         owner: oracle
         group: oracle
-        mode: 0775
+        mode: 0750
         recurse: yes
       become: true
 
@@ -122,7 +124,7 @@
         state: directory
         owner: oracle
         group: oracle
-        mode: 0775
+        mode: 0750
         recurse: yes
       become: true
 
@@ -130,6 +132,9 @@
       template:
         src: oracle.service.j2
         dest: /etc/systemd/system/oracle.service
+        owner: oracle
+        group: oracle
+        mode: 0550
       become: true
       notify:
         - Start oracle

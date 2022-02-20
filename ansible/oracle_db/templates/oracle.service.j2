@@ -6,12 +6,14 @@ Requires=docker.service
 [Service]
 TimeoutStartSec=0
 Restart=always
-ExecStart=/usr/bin/docker run --rm --name %n \
+ExecStart=/usr/bin/docker run --cpus="1" --rm --name %n \
     -p 1521:1521 -p 5500:5500 \
     -e ORACLE_PWD=Vagrant_17$ \
     -e ORACLE_CHARACTERSET=AL32UTF8 \
     -v /opt/oracle/oradata:/opt/oracle/oradata \
-    oracle/database:18.4.0-xe
+    -v /opt/oracle/scripts/setup:/opt/oracle/scripts/setup \
+    -v /opt/oracle/scripts/startup:/opt/oracle/scripts/startup \
+    {{ oracle_docker_name }}
 
 [Install]
 WantedBy=multi-user.target

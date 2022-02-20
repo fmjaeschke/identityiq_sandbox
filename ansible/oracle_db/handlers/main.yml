@@ -4,3 +4,8 @@
     state: started
     enabled: yes
   become: true
+
+- name: clean build
+  file:
+    path: /home/vagrant/oracle-xe
+    state: absent

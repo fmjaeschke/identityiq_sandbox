@@ -1,0 +1,2 @@
+oracle_version: 18.4.0 # should be one of [18.4.0, 21.3.0] as we only build XE variant (https://github.com/oracle/docker-images/blob/main/OracleDatabase/SingleInstance/README.md#how-to-build-and-run)
+oracle_docker_name: oracle/database:{{ oracle_version }}-xe

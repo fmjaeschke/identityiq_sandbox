@@ -39,6 +39,7 @@
     dest: /etc/systemd/system/tomcat.service
     owner: tomcat
     group: tomcat
+    mode: 0550
   become: true
   notify:
     - Start tomcat
