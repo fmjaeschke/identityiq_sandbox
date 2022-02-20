@@ -4,7 +4,7 @@ vagrant + ansible scripts for creating a sandbox with Sailpoint IdentityIQ
 ## installed stack in sandbox
 - Java 11
 - Tomcat 9
-- Oracle 18c XE
+- Oracle 18c XE or 21c XE
 - IdentityIQ (TODO)
 - OpenLDAP (TODO)
 
@@ -13,7 +13,9 @@ vagrant + ansible scripts for creating a sandbox with Sailpoint IdentityIQ
 - vagrant
 - (optional) vagrant-vbguest (see [Troubleshooting](#troubleshooting) section in case of problems)
 - identityiq.war version 8.1
-- at least 10 GB of disc space (~6 GB for Oracle docker image itself + ~3 GB to build Oracle docker image)
+- at least 32 GB of disc space
+  * ~6 GB for Oracle docker image itself (wil be saved as .tar file in current directory) 
+  * ~17 GB for VirtualBox image, if Oracle docker image was loaded from .tar file (~26 GB for Virtualbox image, if Oracle docker image was built from scratch)
 
 - plenty of time (on my AMD Ryzen5 2600 it takes 795 seconds alone to build the Oracle docker image)
 
